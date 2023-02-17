@@ -1,6 +1,6 @@
 {
-    "name": "Demon Slayer RP",
-    "preductname": "Demon Slayer RP",
+    "name": "DemonSlayerRP",
+    "preductname": "DemonSlayerRP",
     "version": "1.0.0",
     "description": "Demon Slayer RP : A l'aube du souffle originel",
     "main": "src/app.js",
