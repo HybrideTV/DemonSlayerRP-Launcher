@@ -1,11 +1,11 @@
 {
-    "name": "Launcher",
-    "preductname": "Launcher",
+    "name": "Demon Slayer RP",
+    "preductname": "Demon Slayer RP",
     "version": "1.0.0",
-    "description": "Launcher",
+    "description": "Demon Slayer RP : A l'aube du souffle originel",
     "main": "src/app.js",
-    "author": "HybrideTV",
-    "url": "https://launcher.studycorp.fr/",
+    "author": "HybrideTV", 
+    "url": "https://launcher.demonslayer-adso.dediweb.ch/",
     "engines": {
         "node": "^18.x.x"
     },
@@ -31,7 +31,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/HybrideTV/Launcher-Dev.git"
+        "url": "git+https://github.com/HybrideTV/DemonSlayerRP-Launcher.git"
     }
 }
  
