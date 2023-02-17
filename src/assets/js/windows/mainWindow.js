@@ -1,8 +1,3 @@
-/**
- * @author Luuxis
- * @license CC-BY-NC 4.0 - https://creativecommons.org/licenses/by-nc/4.0/
- */
-
 "use strict";
 const electron = require("electron");
 const path = require("path");
@@ -28,7 +23,7 @@ function createWindow() {
         height: 720,
         minWidth: 980,
         minHeight: 552,
-        resizable: true,
+        resizable: false,
         icon: `./src/assets/images/icon.${os.platform() === "win32" ? "ico" : "png"}`,
         transparent: os.platform() === 'win32',
         frame: os.platform() !== 'win32',

@@ -1,8 +1,3 @@
-/**
- * @author Luuxis
- * @license CC-BY-NC 4.0 - https://creativecommons.org/licenses/by-nc/4.0/
- */
-
 'use strict';
 
 import { database, changePanel, addAccount, accountSelect } from '../utils.js';
@@ -21,7 +16,6 @@ class Login {
     getOnline() {
         console.log(`Initializing microsoft Panel...`)
         console.log(`Initializing mojang Panel...`)
-        this.loginMicrosoft();
         this.loginMojang();
         document.querySelector('.cancel-login').addEventListener("click", () => {
             document.querySelector(".cancel-login").style.display = "none";
@@ -33,7 +27,6 @@ class Login {
         console.log(`Initializing microsoft Panel...`)
         console.log(`Initializing mojang Panel...`)
         console.log(`Initializing offline Panel...`)
-        this.loginMicrosoft();
         this.loginOffline();
         document.querySelector('.cancel-login').addEventListener("click", () => {
             document.querySelector(".cancel-login").style.display = "none";
@@ -41,66 +34,9 @@ class Login {
         })
     }
 
-    loginMicrosoft() {
-        let microsoftBtn = document.querySelector('.microsoft')
-        let mojangBtn = document.querySelector('.mojang')
-        let cancelBtn = document.querySelector('.cancel-login')
+    
 
-        microsoftBtn.addEventListener("click", () => {
-            microsoftBtn.disabled = true;
-            mojangBtn.disabled = true;
-            cancelBtn.disabled = true;
-            ipcRenderer.invoke('Microsoft-window', this.config.client_id).then(account_connect => {
-                if (!account_connect) {
-                    microsoftBtn.disabled = false;
-                    mojangBtn.disabled = false;
-                    cancelBtn.disabled = false;
-                    return;
-                }
-
-                let account = {
-                    access_token: account_connect.access_token,
-                    client_token: account_connect.client_token,
-                    uuid: account_connect.uuid,
-                    name: account_connect.name,
-                    refresh_token: account_connect.refresh_token,
-                    user_properties: account_connect.user_properties,
-                    meta: {
-                        type: account_connect.meta.type,
-                        xuid: account_connect.meta.xuid,
-                        demo: account_connect.meta.demo
-                    }
-                }
-
-                let profile = {
-                    uuid: account_connect.uuid,
-                    skins: account_connect.profile.skins || [],
-                    capes: account_connect.profile.capes || []
-                }
-
-                this.database.add(account, 'accounts')
-                this.database.add(profile, 'profile')
-                this.database.update({ uuid: "1234", selected: account.uuid }, 'accounts-selected');
-
-                addAccount(account)
-                accountSelect(account.uuid)
-                changePanel("home");
-
-                microsoftBtn.disabled = false;
-                mojangBtn.disabled = false;
-                cancelBtn.disabled = false;
-                cancelBtn.style.display = "none";
-            }).catch(err => {
-                console.log(err)
-                microsoftBtn.disabled = false;
-                mojangBtn.disabled = false;
-                cancelBtn.disabled = false;
-
-            });
-        })
-    }
-
-    async loginMojang() {
+    loginMojang() {
         let mailInput = document.querySelector('.Mail')
         let passwordInput = document.querySelector('.Password')
         let cancelMojangBtn = document.querySelector('.cancel-mojang')
@@ -118,7 +54,7 @@ class Login {
             document.querySelector(".login-card-mojang").style.display = "none";
         })
 
-        loginBtn.addEventListener("click", async () => {
+        loginBtn.addEventListener("click", () => {
             cancelMojangBtn.disabled = true;
             loginBtn.disabled = true;
             mailInput.disabled = true;
@@ -144,9 +80,9 @@ class Login {
                 return
             }
 
-            let account_connect = await Mojang.login(mailInput.value, passwordInput.value)
+            let account_connect = Mojang.login(mailInput.value, passwordInput.value)
 
-            if (account_connect == null || account_connect.error) {
+            if(account_connect == null || account_connect.error) {
                 console.log(err)
                 cancelMojangBtn.disabled = false;
                 loginBtn.disabled = false;
@@ -186,7 +122,7 @@ class Login {
         })
     }
 
-    async loginOffline() {
+    loginOffline() {
         let mailInput = document.querySelector('.Mail')
         let passwordInput = document.querySelector('.Password')
         let cancelMojangBtn = document.querySelector('.cancel-mojang')
@@ -194,7 +130,7 @@ class Login {
         let loginBtn = document.querySelector(".login-btn")
         let mojangBtn = document.querySelector('.mojang')
 
-        mojangBtn.innerHTML = "Offline"
+        mojangBtn.innerHTML = "Ajouter un compte"
 
         mojangBtn.addEventListener("click", () => {
             document.querySelector(".login-card").style.display = "none";
@@ -206,7 +142,7 @@ class Login {
             document.querySelector(".login-card-mojang").style.display = "none";
         })
 
-        loginBtn.addEventListener("click", async () => {
+        loginBtn.addEventListener("click", () => {
             cancelMojangBtn.disabled = true;
             loginBtn.disabled = true;
             mailInput.disabled = true;
@@ -232,9 +168,9 @@ class Login {
                 return
             }
 
-            let account_connect = await Mojang.login(mailInput.value, passwordInput.value)
+            let account_connect =  Mojang.login(mailInput.value, passwordInput.value)
 
-            if (account_connect == null || account_connect.error) {
+            if(account_connect == null || account_connect.error) {
                 console.log(err)
                 cancelMojangBtn.disabled = false;
                 loginBtn.disabled = false;
